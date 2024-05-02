@@ -3,7 +3,7 @@ require 'pry'
 
 class StringCalculator
   def self.add(string_of_numbers)
-    raise 'Argument must be a string' unless string_of_numbers.is_a?(String)
+    raise ArgumentError, 'Argument must be a string' unless string_of_numbers.is_a?(String)
 
     return 0 if string_of_numbers.empty?
 
@@ -18,13 +18,9 @@ class StringCalculator
 
   private
 
-  # find differnt delimiters
+  # finds differnt delimiters
   def self.find_delimiter(string_of_numbers)
-    delimiter = ","
-    if string_of_numbers.start_with?("//")
-      delimiter = string_of_numbers[2]
-    end
-    delimiter
+    string_of_numbers.start_with?("//") ? string_of_numbers[2] : ','
   end
 
   # Extracts numbers from the string
