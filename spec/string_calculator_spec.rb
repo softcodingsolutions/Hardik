@@ -1,5 +1,4 @@
 require_relative '../string_calculator'
-require 'pry'
 
 describe StringCalculator do
   describe '#add' do
