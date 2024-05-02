@@ -31,6 +31,10 @@ describe StringCalculator do
       it 'returns sum of passed numbers' do
         expect(described_class.add("1\n2,3")).to eq 6
       end
+
+      it "return error when invalid \n passed" do
+        expect(described_class.add("1,\n")).to eq 'Invalid input'
+      end
     end
 
     context "when string has different delimiter" do

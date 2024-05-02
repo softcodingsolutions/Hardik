@@ -5,11 +5,15 @@ class StringCalculator
   def self.add(string_of_numbers)
     raise 'Argument must be a string' unless string_of_numbers.is_a?(String)
 
-    return 0 if string_of_numbers.length == 0
+    return 0 if string_of_numbers.empty?
+
     delimiter = find_delimiter(string_of_numbers)
     numbers = extract_numbers(string_of_numbers, delimiter)
-    check_for_negatives(numbers)
-    numbers.sum
+    return 'Invalid input' unless numbers.all?{ |element| valid?(element) }
+
+    numbers_arr = numbers.map(&:to_i)
+    check_for_negatives(numbers_arr)
+    numbers_arr.sum
   end
 
   private
@@ -26,7 +30,12 @@ class StringCalculator
   # Extracts numbers from the string
   def self.extract_numbers(string_of_numbers, delimiter)
     string_of_numbers = string_of_numbers.gsub(/\/\/.*\n/, '').gsub(/(?<=\d)\n(?=\d)/, delimiter)
-    string_of_numbers.split(Regexp.new(delimiter)).map(&:to_i)
+    string_of_numbers.split(Regexp.new(delimiter))
+  end
+
+  # Ensure no extra new line chars
+  def self.valid?(string)
+    !string.scan(/^[-+]?\d*\.?\d+$/).empty?
   end
 
   # Checks for negative numbers and raises an exception if any are found
